@@ -27,7 +27,7 @@ export class Ci {
     return dag.container().from(baseImage)
       .withExec(["apk", "update"])
       .withExec(["apk", "add", "mlt", "xvfb-run"])
-      .withEntrypoint(["/melt"])
+      .withEntrypoint(["melt"])
       .withRegistryAuth(targetImage, username, registryToken)
       .publish(targetImage)
   }
