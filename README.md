@@ -1,11 +1,11 @@
 # mlt
 
-> The mlt framework https://www.mltframework.org/ as docker container
+> The melt/mlt framework https://www.mltframework.org/ as docker container with many fonts.
 
 ## Usage
 
 ```bash
-docker run -it --rm mheers/mlt
+docker run -it --rm mheers/melt:v7.28.0
 ```
 
 ## Build

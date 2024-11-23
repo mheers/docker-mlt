@@ -17,16 +17,18 @@ import { dag, Directory, object, func, Secret } from "@dagger.io/dagger"
 
 const username = "mheers"
 
-const baseImage = "alpine:3.20.3"
-const targetImage = "docker.io/mheers/mlt:7.24.0"
+const baseImage = "mltframework/melt:v7.28.0"
+const targetImage = "docker.io/mheers/melt:v7.28.0"
+
+const fontPackages = ["fonts-noto", "ttf-mscorefonts-installer", "fonts-dejavu", "fonts-liberation", "fonts-crosextra-carlito", "fonts-crosextra-caladea", "fonts-freefont-ttf"]
 
 @object()
 export class Ci {
   @func()
   async buildAndPushImage(src: Directory, registryToken: Secret): Promise<string> {
     return dag.container().from(baseImage)
-      .withExec(["apk", "update"])
-      .withExec(["apk", "add", "mlt", "xvfb", "xvfb-run"])
+      .withExec(["apt-get", "update"])
+      .withExec(["apt-get", "install", "-y", ...fontPackages])
       .withEntrypoint(["xvfb-run", "-a", "melt"])
       .withRegistryAuth(targetImage, username, registryToken)
       .publish(targetImage)
